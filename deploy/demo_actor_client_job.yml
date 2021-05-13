@@ -1,0 +1,20 @@
+# Copyright (c) Microsoft Corporation and Dapr Contributors.
+# Licensed under the MIT License.
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: demoactor-client-app
+spec:
+  template:
+    metadata:
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "with-shutdown"
+    spec:
+      containers:
+      - name: demoactor-client
+        image: beverstdapr.azurecr.io/demo_actor:latest  # EDIT HERE: Replace the image name with [docker registry]/demo_actor:latest
+        command: ["/bin/sh", "-c", "sleep 10 && python /app/demo_actor_client.py"]
+        imagePullPolicy: Always
+      restartPolicy: Never
